@@ -1,4 +1,21 @@
+/*
+ * Copyright 2012 ikstob.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package botski.example;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +28,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import botski.util.Utils;
+
+/**
+ * 
+ */
 public class AddMeFastExample
     implements Runnable
 {
@@ -103,7 +125,7 @@ public class AddMeFastExample
                 jse.executeScript( "jQuery('.single_like_button').click();");
                 
                 // Allow time for the popup window to appear
-                sleep(1000);
+                Utils.sleep(1000);
                 
                 // Switch to the new window
                 Set<String> winSet = driver.getWindowHandles();
@@ -115,14 +137,14 @@ public class AddMeFastExample
                 jse.executeScript( "var inputs=document.getElementsByTagName('input');for(var i=0; i<inputs.length; i++){var input=inputs[i];var value=input.getAttribute('value');if(value!=null){if(value=='Like'){input.click();break;}}}" );
                 
                 // Allow time for the Like action to go through
-                sleep(1000);
+                Utils.sleep(1000);
                 
                 // Close this window and switch back to the main one
                 driver.close();
                 driver.switchTo().window(windowHandle);
                 
                 // This delay allows AddMeFast to detect the window close and request the next page to Like
-                sleep(5000);
+                Utils.sleep(5000);
                 
                 // Update counters
                 likes++;
@@ -138,11 +160,10 @@ public class AddMeFastExample
         }
     }
     
-    public static void sleep( long millis )
-    {
-        try { Thread.sleep(millis); } catch ( Exception e ) { }
-    }
-    
+    /**
+     * 
+     * @param args
+     */
     public static void main( String[] args )
     {
         (new AddMeFastExample()).run();
